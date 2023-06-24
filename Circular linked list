@@ -1,0 +1,155 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class Cll:
+    def __init__(self):
+        self.head = None
+
+    def display(self):
+        if self.head is None:
+            print("Circular linked list is empty.")
+            return
+        temp = self.head
+        while True:
+            if temp.next == self.head:
+                print(temp.data)
+                break
+            else:
+                print(temp.data, "--->", end=" ")
+            temp = temp.next
+
+
+    def insert_at_begin(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            new_node.next = new_node 
+        else:
+            curr = self.head
+            while curr.next != self.head:
+                curr = curr.next
+            curr.next = new_node
+            new_node.next = self.head
+        self.head = new_node
+
+    def insert_at_end(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            new_node.next = new_node  
+            self.head = new_node
+        else:
+            curr = self.head
+            while curr.next != self.head:
+                curr = curr.next
+            curr.next = new_node
+            new_node.next = self.head
+
+    def insert_at_location(self, data, loc):
+        if loc == 1:
+            self.insert_at_begin(data)
+        else:
+            new_node = Node(data)
+            curr = self.head
+            co = 1
+            while co < loc - 1 and curr.next != self.head:
+                curr = curr.next
+                co = co + 1
+            if curr.next == self.head:
+                print("The position is not found. Please enter the correct position.")
+            else:
+                new_node.next = curr.next
+                curr.next = new_node
+
+    def delete_at_begin(self):
+        if self.head is None:
+            print("Circular linked list is empty. Nothing to delete.")
+        elif self.head.next == self.head:
+            print("The deleted element is:", self.head.data)
+            self.head = None
+        else:
+            curr = self.head
+            while curr.next != self.head:
+                curr = curr.next
+            print("The deleted element is:", self.head.data)
+            curr.next = self.head.next
+            self.head = self.head.next
+
+    def delete_at_end(self):
+        if self.head is None:
+            print("Circular linked list is empty. Nothing to delete.")
+        elif self.head.next == self.head:
+            print("The deleted element is:", self.head.data)
+            self.head = None
+        else:
+            prev = None
+            curr = self.head
+            while curr.next != self.head:
+                prev = curr
+                curr = curr.next
+            print("The deleted element is:", curr.data)
+            prev.next = self.head
+
+    def delete_at_pos(self, pos):
+        if pos == 1:
+            self.delete_at_begin()
+        else:
+            curr = self.head
+            co = 1
+            while co < pos - 1 and curr.next != self.head:
+                curr = curr.next
+                co = co + 1
+            if curr.next == self.head:
+                print("The position is not found. Please enter the correct position.")
+            else:
+                temp = curr.next
+                print("The deleted element is:", temp.data)
+                curr.next = temp.next
+                
+
+
+
+
+
+
+
+cl = Cll()
+
+
+while True:
+    print("Select an operation:")
+    print("1. Display")
+    print("2. Insert at the beginning")
+    print("3. Insert at the end")
+    print("4. Insert at a location")
+    print("5. Delete at the beginning")
+    print("6. Delete at the end")
+    print("7. Delete at a position")
+    print("8. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        cl.display()
+    elif choice == 2:
+        data = int(input("Enter the element to insert: "))
+        cl.insert_at_begin(data)
+    elif choice == 3:
+        data = int(input("Enter the element to insert: "))
+        cl.insert_at_end(data)
+    elif choice == 4:
+        data = int(input("Enter the element to insert: "))
+        loc = int(input("Enter the position to insert at: "))
+        cl.insert_at_location(data, loc)
+    elif choice == 5:
+        cl.delete_at_begin()
+    elif choice == 6:
+        cl.delete_at_end()
+    elif choice == 7:
+        pos = int(input("Enter the position to delete at: "))
+        cl.delete_at_pos(pos)
+    elif choice == 8:
+        break
+    else:
+        print("Invalid choice. Please try again.")
